@@ -1,0 +1,111 @@
+[
+  {
+    "id": "firewall",
+    "name": "Firewall",
+    "keywords": [
+      "firewall",
+      "network security",
+      "packet filtering",
+      "rules"
+    ],
+    "description": "Imagine a super smart security guard for your computer called a firewall. It watches all the information trying to come in or go out, like checking IDs at a gate. It only lets the good, safe information pass through and blocks anything that looks suspicious or dangerous, keeping your computer safe from online baddies!",
+    "components": [
+      {
+        "name": "FirewallManager (backend)",
+        "type": "backend",
+        "description": "This is like the main control panel for the firewall security guard. It decides what rules the guard follows, keeps a list of everything the guard stops, and helps the guard do its job on the computer."
+      },
+      {
+        "name": "firewall_api.py (backend)",
+        "type": "backend",
+        "description": "This is like a special phone line that other computer programs can use to talk to the firewall's control panel. They can use it to ask the firewall to change rules or see what it has been up to."
+      },
+      {
+        "name": "FirewallEventsTable (frontend)",
+        "type": "frontend",
+        "description": "This is like a TV screen that shows you a list of all the things the firewall guard has seen or stopped. You can look at it to see if any bad stuff tried to get in."
+      },
+      {
+        "name": "FirewallPage (frontend)",
+        "type": "frontend",
+        "description": "This is like the main screen where you can see if the firewall guard is on duty, tell it new rules, or look at its activity log (the TV screen list)."
+      }
+    ],
+    "dataFlow": "Think of information traveling in tiny digital packages, like mail. When these packages arrive, the Firewall Manager (the control panel) checks them against its list of rules. If a package is safe, it gets to go through. If it's not safe, it's blocked, and the firewall writes down what happened so we can see it later. It's like a mail sorter that only lets good mail through and keeps a record of any bad mail it stops.",
+    "configuration": "Firewall rules can be configured through the 'Firewall' section in the application. Rules can be based on IP address, port number, protocol, and direction (incoming/outgoing).",
+    "troubleshooting": "If legitimate traffic is being blocked, check the firewall rules for misconfigurations. Ensure the firewall service is running. Check firewall logs for details on blocked packets.",
+    "relatedTopics": [
+      "network_security",
+      "ids_ips",
+      "packet_filtering"
+    ]
+  },
+  {
+    "id": "threat_intelligence",
+    "name": "Threat Intelligence",
+    "keywords": [
+      "threat intel",
+      "ip reputation",
+      "malicious ips",
+      "threat feeds"
+    ],
+    "description": "This is like having a team of super detectives who know all about the bad guys on the internet. They gather clues about new dangers and help our computer spot them before they cause trouble. It's like knowing which houses in the neighborhood are safe to visit and which ones to avoid!",
+    "components": [
+      {
+        "name": "ThreatIntelligenceService (backend)",
+        "type": "backend",
+        "description": "This is the main detective in our team. It checks if an internet address (like a house address) is known for bad stuff by looking it up in special lists from other detective agencies. It also remembers addresses it has checked before so it's faster next time."
+      },
+      {
+        "name": "threat_intel_api.py (backend)",
+        "type": "backend",
+        "description": "This is a special phone line for other programs to ask our main detective about internet addresses. They can quickly find out if an address is safe or not."
+      },
+      {
+        "name": "ThreatIntelPage (frontend)",
+        "type": "frontend",
+        "description": "This is where you can be a detective too! You can type in an internet address and see what our detective team knows about it, like whether it's a good guy or a bad guy."
+      }
+    ],
+    "dataFlow": "When the computer sees a new internet address (maybe from an email or a website), it asks the Threat Intelligence Service (our main detective) to check it out. The detective looks at its lists and asks other detective agencies. Then, it tells the computer if the address is safe, a bit suspicious, or definitely a baddie, and why.",
+    "configuration": "Threat intelligence feeds can be configured in the settings. API keys for services like VirusTotal or AbuseIPDB may be required. Cache settings (TTL) can also be adjusted.",
+    "troubleshooting": "If IP reputation checks are failing, ensure API keys are correct and that the system has internet access to query external feeds. Check if Redis (if used for caching) is running correctly.",
+    "relatedTopics": [
+      "network_security",
+      "malware_detection",
+      "ids_ips"
+    ]
+  },
+  {
+    "id": "electron_packaging",
+    "name": "Electron Application Packaging",
+    "keywords": [
+      "electron",
+      "desktop app",
+      "packaging",
+      "cross-platform"
+    ],
+    "description": "Imagine you built an awesome LEGO castle (that's our computer program). Electron is like a special magic box that takes your LEGO castle and turns it into a real toy that anyone can play with on their computer, whether they have Windows, a Mac, or Linux. So, it lets our program work like a normal app you install.",
+    "components": [
+      {
+        "name": "eCyber/electron/main.js (frontend)",
+        "type": "frontend",
+        "description": "This is like the instruction manual for the magic box. It tells the computer how to open the toy, what size the toy's window should be, and what to do when you want to close the toy."
+      },
+      {
+        "name": "eCyber/electron/preload.js (frontend)",
+        "type": "frontend",
+        "description": "This is a little helper script that gets everything ready inside the magic box before your LEGO castle (the program) appears. It makes sure the castle can safely use some of the magic box's special tools."
+      },
+      {
+        "name": "electron-builder (tool)",
+        "type": "tool",
+        "description": "This is a super cool machine that takes the magic box with the LEGO castle inside and wraps it up nicely so you can give it to your friends. It makes the actual toy file that people can download and install on their computers."
+      }
+    ],
+    "dataFlow": "First, we build our program (the LEGO castle). Then, Electron (the magic box) takes this program and puts it inside a special computer window that looks like a normal app. The 'main.js' (instruction manual) tells the computer how to show and run the app. 'preload.js' (the helper) makes sure the app can talk to the computer safely. Finally, 'electron-builder' (the wrapping machine) packages it all up.",
+    "configuration": "Electron packaging is typically configured in package.json using the 'build' section for electron-builder. This includes settings for app ID, product name, icons, file associations, and platform-specific options (Windows, macOS, Linux).",
+    "troubleshooting": "Common packaging issues include incorrect paths to icons or build assets, problems with native module compilation, or platform-specific signing errors. Ensure Node.js and npm/yarn are correctly set up. Check electron-builder documentation for specific error codes or issues.",
+    "relatedTopics": []
+  }
+]

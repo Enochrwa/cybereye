@@ -1,0 +1,22 @@
+.env
+backend/__pycache__/
+backend/dist/
+backend/build/
+# Python
+__pycache__/
+*.py[cod]
+*.spec
+.env/
+.venv/
+dist/
+build/
+
+# Node
+node_modules/
+eCyber/dist/
+eCyber/dist_electron/
+
+# Electron
+*.log
+*.lock
+.DS_Store

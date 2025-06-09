@@ -1,0 +1,6 @@
+venv
+build
+dist
+_pycache
+main.spec
+routes.txt
