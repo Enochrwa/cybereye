@@ -363,8 +363,11 @@ export const loginUser = (credentials: { username: string; password: string }) =
   apiClient.login(credentials);
 
 export const registerUser = async (userData: any) => {
-  const response = await axios.post('httpp://127.0.0.1:8000/auth/register', userData);
-  return response.data; // Expected: UserSchema
+  // apiClient is already instantiated in this file and has baseURL 'http://localhost:8000/api'
+  // The backend route is /api/v1/auth/register
+  // So, the path for apiClient.post should be '/v1/auth/register'
+  const response = await apiClient.post('/v1/auth/register', userData);
+  return response.data; // Expected: UserSchema (or the actual User model from backend)
 };
 
 export const verifyTwoFactorLogin = (code: string) => 

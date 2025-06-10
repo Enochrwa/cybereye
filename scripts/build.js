@@ -40,7 +40,7 @@ async function buildApp() {
     
     // Step 2: Build React frontend
     console.log('\n⚛️  Building React frontend...');
-    await runCommand('npm', ['run', 'build'], { cwd: projectRoot });
+    await runCommand('npm', ['run', 'home-build'], { cwd: projectRoot });
     
     // Step 3: Copy backend if it exists
     console.log('\n🐍 Copying backend distribution...');
@@ -49,6 +49,7 @@ async function buildApp() {
     } catch (error) {
       console.warn('⚠️  Backend not found. Make sure to build it with PyInstaller first.');
       console.warn('   Run: cd ../backend && pyinstaller ecyber_backend.spec');
+      process.exit(1);
     }
     
     // Step 4: Package with Electron Builder

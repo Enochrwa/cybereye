@@ -186,6 +186,7 @@ if settings.PRODUCTION:
     )
     settings.BACKEND_CORS_ORIGINS = [
         "https://ecyber.vercel.app",
+        "http://localhost:4000",
         "https://ecyber-ten.vercel.app",
         "https://your-production-domain.com"
     ]

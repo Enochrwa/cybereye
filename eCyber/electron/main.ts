@@ -1,5 +1,5 @@
 // Fixed Electron main process with proper error handling and security
-import { app, BrowserWindow, Menu, ipcMain, dialog, shell } from 'electron';
+import { app, BrowserWindow, Menu, ipcMain, dialog, shell, session } from 'electron';
 import { spawn, ChildProcess } from 'child_process';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -140,14 +140,15 @@ class BackendManager {
       }
     } else {
       // Production mode - use bundled executable
-      const exeName = platform === 'win32' ? 'backend_server.exe' : 'backend_server';
-      const backendExe = path.join(process.resourcesPath, 'backend', exeName);
+      const exeName = platform === 'win32' ? 'ecyber_backend.exe' : 'ecyber_backend';
+      const backendBasePath = path.join(process.resourcesPath, 'app_backend');
+      const backendExe = path.join(backendBasePath, exeName);
       
       if (fs.existsSync(backendExe)) {
         return {
           executable: backendExe,
           args: [],
-          cwd: path.dirname(backendExe),
+          cwd: backendBasePath,
         };
       }
     }
@@ -540,6 +541,31 @@ const appManager = new AppManager();
 
 // App event handlers
 app.whenReady().then(() => {
+  // Apply Content Security Policy
+  const cspDirectives = [
+    "default-src 'self'",
+    "script-src 'self'", // Add hashes here if Vite's prod build uses inline scripts and 'unsafe-inline' is to be avoided
+    "style-src 'self' 'unsafe-inline'", // 'unsafe-inline' is often needed for UI libraries
+    "img-src 'self' data:",
+    "font-src 'self' data:",
+    `connect-src 'self' http://localhost:${APP_CONFIG.backend.port} ws://localhost:${APP_CONFIG.backend.port}`, // Added WebSocket for potential Socket.IO
+    "object-src 'none'",
+    "frame-src 'none'", // Or specify trusted frame sources if needed
+    "base-uri 'self'",
+    "form-action 'self'",
+    "media-src 'self'" // If you use audio/video
+  ];
+  const cspString = cspDirectives.join('; ');
+
+  session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
+    callback({
+      responseHeaders: {
+        ...details.responseHeaders,
+        'Content-Security-Policy': [cspString],
+      },
+    });
+  });
+
   appManager.initialize().catch((error) => {
     Logger.error('Failed to initialize app:', error);
     app.quit();

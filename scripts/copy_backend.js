@@ -7,7 +7,7 @@ const __dirname = path.dirname(__filename);
 
 const projectRoot = path.join(__dirname, '..');
 const backendDistPath = path.join(projectRoot, '..', 'backend', 'dist', 'ecyber_backend_dist');
-const targetPath = path.join(projectRoot, 'backend', 'dist', 'ecyber_backend_dist');
+const targetPath = path.join(projectRoot, 'build_resources', 'pyinstaller_backend_dist');
 
 async function copyBackend() {
   try {
